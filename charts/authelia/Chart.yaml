@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 4.25.1
+name: authelia
+version: 1.0.0
+dependencies:
+  - name: common
+    repository: https://k8s-at-home.com/charts/
+    version: 2.2.1

@@ -1,0 +1,74 @@
+---
+image:
+  repository: dperson/samba
+  pullPolicy: Always
+
+strategy:
+  type: Recreate
+
+# env:
+#   TZ: Europe/Madrid
+#   USERID: 1001
+#   GROUPID: 1001
+
+# envFrom:
+# - configMapRef:
+#     name: env
+# - secretRef:
+#     name: env
+
+service:
+  type: LoadBalancer
+  loadBalancerIP: 192.168.2.40
+  externalTrafficPolicy: Local
+  annotations:
+    metallb.universe.tf/allow-shared-ip: samba-svc
+  port:
+    port: 445
+    name: smb
+
+  additionalServices:
+  - enabled: true
+    nameSuffix: tcp
+    annotations:
+      metallb.universe.tf/allow-shared-ip: samba-svc
+    type: LoadBalancer
+    loadBalancerIP: 192.168.2.40
+    externalTrafficPolicy: Local
+    port:
+      port: 139
+      name: netbios-session
+  - enabled: true
+    nameSuffix: udp
+    annotations:
+      metallb.universe.tf/allow-shared-ip: samba-svc
+    type: LoadBalancer
+    loadBalancerIP: 192.168.2.40
+    externalTrafficPolicy: Local
+    port:
+      port: 137
+      name: netbios-wins
+      protocol: UDP
+    additionalPorts:
+    - port: 138
+      name: netbios-dgrm
+      protocol: UDP
+
+# additionalVolumes:
+# - name: storage
+#   persistentVolumeClaim:
+#     claimName: samba-storage
+
+# additionalVolumeMounts:
+# - name: storage
+#   mountPath: /documents
+#   subPath: documents
+# - name: storage
+#   mountPath: /media
+#   subPath: media
+# - name: storage
+#   mountPath: /shares
+#   subPath: shares
+
+# podSecurityContext:
+#   fsGroup: 1001

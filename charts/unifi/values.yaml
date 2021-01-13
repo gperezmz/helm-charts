@@ -1,0 +1,70 @@
+image:
+  repository: ghcr.io/linuxserver/unifi-controller
+  pullPolicy: IfNotPresent
+
+strategy:
+  type: Recreate
+
+# env:
+  # PUID: 1001
+  # PGID: 1001
+  # TZ: Europe/Madrid
+
+service:
+  type: LoadBalancer
+  loadBalancerIP: 192.168.2.30
+  externalTrafficPolicy: Local
+  annotations:
+    metallb.universe.tf/allow-shared-ip: unifi-svc
+  port:
+    port: 8080
+  additionalPorts:
+  - port: 8443
+    name: https
+
+  additionalServices:
+  - enabled: true
+    nameSuffix: tcp
+    annotations:
+      metallb.universe.tf/allow-shared-ip: unifi-svc
+    type: LoadBalancer
+    loadBalancerIP: 192.168.2.30
+    externalTrafficPolicy: Local
+    port:
+      port: 8880
+      name: http-redirect
+    additionalPorts:
+    - port: 8843
+      name: https-redirect
+    - port: 6789
+      name: speedtest
+  - enabled: true
+    nameSuffix: udp
+    annotations:
+      metallb.universe.tf/allow-shared-ip: unifi-svc
+    type: LoadBalancer
+    loadBalancerIP: 192.168.2.30
+    externalTrafficPolicy: Local
+    port:
+      port: 3478
+      protocol: UDP
+      name: stun
+    additionalPorts:
+    - port: 5514
+      protocol: UDP
+      name: syslog
+    - port: 10001
+      protocol: UDP
+      name: discovery
+    - port: 1900
+      protocol: UDP
+      name: l2
+
+persistence:
+  config:
+    enabled: false
+    emptyDir: false
+    # existingClaim: unifi-config
+
+# podSecurityContext:
+#   fsGroup: 1001
