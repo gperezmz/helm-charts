@@ -1,0 +1,9 @@
+---
+apiVersion: v2
+appVersion: version-v3.10
+name: rutorrent
+version: 1.0.0
+dependencies:
+  - name: common
+    repository: https://k8s-at-home.com/charts/
+    version: 2.2.1

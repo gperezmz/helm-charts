@@ -1,0 +1,54 @@
+---
+image:
+  repository: ghcr.io/linuxserver/rutorrent
+  pullPolicy: IfNotPresent
+
+strategy:
+  type: Recreate
+
+# env:
+#   TZ: Europe/Madrid
+#   PUID: 1001
+#   PGID: 1001
+
+service:
+  annotations:
+    metallb.universe.tf/allow-shared-ip: rutorrent-svc
+  type: LoadBalancer
+  loadBalancerIP: 192.168.2.20
+  port:
+    port: 80
+
+  additionalServices:
+  - enabled: true
+    nameSuffix: tcp
+    annotations:
+      metallb.universe.tf/allow-shared-ip: rutorrent-svc
+    type: LoadBalancer
+    loadBalancerIP: 192.168.2.20
+    port:
+      port: 51413
+      name: bittorrent
+      protocol: TCP
+  - enabled: true
+    nameSuffix: udp
+    annotations:
+      metallb.universe.tf/allow-shared-ip: rutorrent-svc
+    type: LoadBalancer
+    loadBalancerIP: 192.168.2.20
+    port:
+      port: 6881
+      name: dht
+      protocol: UDP
+
+persistence:
+  config:
+    enabled: false
+    emptyDir: false
+    # existingClaim: rutorrent-config
+
+  downloads:
+    enabled: false
+    emptyDir: false
+    # mountPath: /downloads
+    # existingClaim: rutorrent-downloads
