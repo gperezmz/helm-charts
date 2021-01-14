@@ -1,0 +1,9 @@
+---
+apiVersion: v2
+appVersion: 1.21.1.3876-3c3adfcb4
+name: plex
+version: 1.0.0
+dependencies:
+  - name: common
+    repository: https://k8s-at-home.com/charts/
+    version: 2.2.1

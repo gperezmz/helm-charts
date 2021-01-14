@@ -1,0 +1,75 @@
+image:
+  repository: plexinc/pms-docker
+  pullPolicy: IfNotPresent
+
+strategy:
+  type: Recreate
+
+# env:
+#   TZ: Europe/Madrid
+#   PLEX_UID: 1001
+#   PLEX_GID: 1001
+#   HOSTNAME: plex.example.com
+#   ADVERTISE_IP: https://plex.example.com:443/,http://192.168.2.21:32400/
+#   ALLOWED_NETWORKS: 192.168.0.0/22,10.1.0.0/16
+
+service:
+  annotations:
+    metallb.universe.tf/allow-shared-ip: plex-svc
+  type: LoadBalancer
+  loadBalancerIP: 192.168.2.21
+  externalTrafficPolicy: Local
+  port:
+    port: 32400
+
+  additionalServices:
+  - enabled: true
+    nameSuffix: tcp
+    annotations:
+      metallb.universe.tf/allow-shared-ip: plex-svc
+    type: LoadBalancer
+    loadBalancerIP: 192.168.2.21
+    externalTrafficPolicy: Local
+    port:
+      port: 3005
+      name: home-theater
+      protocol: TCP
+  - enabled: true
+    nameSuffix: udp
+    annotations:
+      metallb.universe.tf/allow-shared-ip: plex-svc
+    type: LoadBalancer
+    loadBalancerIP: 192.168.2.21
+    externalTrafficPolicy: Local
+    port:
+      port: 32410
+      name: gdm-01
+      protocol: UDP
+    additionalPorts:
+    - port: 32412
+      name: gdm-02
+      protocol: UDP
+    - port: 32413
+      name: gdm-03
+      protocol: UDP
+    - port: 32414
+      name: gdm-04
+      protocol: UDP
+
+persistence:
+  config:
+    enabled: false
+    # existingClaim: plex-config
+
+  data:
+    enabled: false
+    mountPath: /data
+    # existingClaim: plex-data
+  
+  transcode:
+    enabled: false
+    mountPath: /transcode
+    # existingClaim: plex-transcode
+
+# podSecurityContext:
+#   fsGroup: 1001
