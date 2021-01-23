@@ -12,10 +12,9 @@ strategy:
 
 service:
   type: LoadBalancer
-  loadBalancerIP: 192.168.2.30
+  externalIPs:
+  - 192.168.2.30
   externalTrafficPolicy: Local
-  annotations:
-    metallb.universe.tf/allow-shared-ip: unifi-svc
   port:
     port: 8080
   additionalPorts:
@@ -25,10 +24,9 @@ service:
   additionalServices:
   - enabled: true
     nameSuffix: tcp
-    annotations:
-      metallb.universe.tf/allow-shared-ip: unifi-svc
     type: LoadBalancer
-    loadBalancerIP: 192.168.2.30
+    externalIPs:
+    - 192.168.2.30
     externalTrafficPolicy: Local
     port:
       port: 8880
@@ -40,10 +38,9 @@ service:
       name: speedtest
   - enabled: true
     nameSuffix: udp
-    annotations:
-      metallb.universe.tf/allow-shared-ip: unifi-svc
     type: LoadBalancer
-    loadBalancerIP: 192.168.2.30
+    externalIPs:
+    - 192.168.2.30
     externalTrafficPolicy: Local
     port:
       port: 3478
