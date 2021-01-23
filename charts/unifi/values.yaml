@@ -16,10 +16,11 @@ service:
   - 192.168.2.30
   externalTrafficPolicy: Local
   port:
-    port: 8080
-  additionalPorts:
-  - port: 8443
+    port: 8443
     name: https
+  additionalPorts:
+  - port: 8080
+    name: http
 
   additionalServices:
   - enabled: true
