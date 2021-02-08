@@ -1,9 +1,9 @@
 ---
 apiVersion: v2
-appVersion: 6.0.43-ls94
+appVersion: 6.0.45
 name: unifi
-version: 1.0.1
+version: 1.1.0
 dependencies:
   - name: common
     repository: https://k8s-at-home.com/charts/
-    version: 2.2.1
+    version: 2.4.0
