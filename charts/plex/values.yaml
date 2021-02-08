@@ -1,6 +1,6 @@
 image:
   repository: plexinc/pms-docker
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 strategy:
   type: Recreate
