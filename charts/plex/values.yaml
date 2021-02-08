@@ -68,5 +68,5 @@ persistence:
     mountPath: /transcode
     # existingClaim: plex-transcode
 
-# podSecurityContext:
-#   fsGroup: 1001
+podSecurityContext:
+  fsGroup: 1001
