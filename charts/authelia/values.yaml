@@ -40,7 +40,6 @@ persistence:
     enabled: false
     emptyDir: false
     # existingClaim: authelia-config
-
 # securityContext:
 #   runAsGroup: 1001
 #   runAsUser: 1001
