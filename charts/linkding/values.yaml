@@ -1,0 +1,15 @@
+image:
+  repository: sissbruecker/linkding
+  pullPolicy: IfNotPresent
+
+strategy:
+  type: Recreate
+
+service:
+  port:
+    port: 9090
+
+persistence:
+  data:
+    enabled: false
+    mountPath: /etc/linkding/data
