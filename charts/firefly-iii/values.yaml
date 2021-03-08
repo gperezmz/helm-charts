@@ -1,0 +1,28 @@
+---
+image:
+  repository: jc5x/firefly-iii
+  pullPolicy: IfNotPresent
+
+strategy:
+  type: Recreate
+
+# env:
+#   APP_KEY: CHANGEME_32_CHARS
+#   DB_HOST: fireflyiiidb
+#   DB_DATABASE: firefly
+#   DB_USERNAME: firefly
+#   DB_PORT: 3306
+#   DB_CONNECTION: mysql
+#   DB_PASSWORD: somepw
+#   APP_KEY: CHANGEME_32_CHARS
+#   APP_URL: https://firefly.example.com
+#   TRUSTED_PROXIES: '**'
+
+service:
+  port:
+    port: 8080
+
+persistence:
+  data:
+    enabled: false
+    mountPath: /var/www/html/storage/upload
