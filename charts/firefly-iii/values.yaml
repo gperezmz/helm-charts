@@ -1,6 +1,7 @@
 ---
 image:
   repository: jc5x/firefly-iii
+  version: version-5.4.6
   pullPolicy: IfNotPresent
 
 strategy:
