@@ -2,8 +2,8 @@
 apiVersion: v2
 name: firefly-iii
 appVersion: version-5.4.6
-version: 1.1.0
+version: 1.2.0
 dependencies:
   - name: common
-    repository: https://k8s-at-home.com/charts/
-    version: 3.1.0
+    version: 1.0.0
+    repository: https://library-charts.k8s-at-home.com
